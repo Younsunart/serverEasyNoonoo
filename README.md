@@ -13,6 +13,12 @@ launch the server by enter the next command in your terminal :
 
 Open your postman, and configure it as below :
 
+link for the request : http://localhost:4000/api/calculscharges
+type of the request : POST
+content-type : application/json
+
+see the next photos to be sure how to configure it
+
 ![alt text](https://i.postimg.cc/KzJPxHmB/Screenshot-2020-01-13-at-10-03-19.png)
 
 Enter the request as below : 
