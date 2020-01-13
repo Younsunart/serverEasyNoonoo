@@ -13,7 +13,7 @@ launch the server by enter the next command in your terminal :
 
 Open your postman, and configure it as below :
 
-![alt text](https://i.postimg.cc/hvRB4pM4/Screenshot-2020-01-13-at-09-54-58.png)
+![alt text](https://i.postimg.cc/KzJPxHmB/Screenshot-2020-01-13-at-10-03-19.png)
 
 Enter the request as below : 
 
