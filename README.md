@@ -18,3 +18,20 @@ Open your postman, and configure it as below :
 Enter the request as below : 
 
 ![alt text](https://i.postimg.cc/qvvd7tcK/Screenshot-2020-01-13-at-09-58-06.png)
+
+The request must match the request below, just change values : 
+
+{
+	"dateDebutAnnee" : 2020,
+	"enfantPlusJeune" : 4,
+	"nbEnfants" : 1,
+	"parentIsole" : true,
+	"ressourcesAnnuelles" : 25000,
+	"heuresSup" : 8,
+	"heuresHebdo" : 40,
+	"tauxHoraire": 10.40,
+	"repartitionFamille" : 0.5,
+	"alsaceMoselle" : false,
+	"trancheA" : true, 
+	"tauxParticipationCotisations" : 0.5
+}
