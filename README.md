@@ -17,7 +17,7 @@ Open your postman, and configure it as below :
 
 Enter the request as below : 
 
-![alt text](https://i.postimg.cc/qvvd7tcK/Screenshot-2020-01-13-at-09-58-06.png)
+![alt text](https://i.postimg.cc/25ddX5JH/Screenshot-2020-01-13-at-10-02-08.png)
 
 The request must match the request below, just change values : 
 
