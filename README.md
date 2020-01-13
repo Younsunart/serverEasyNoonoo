@@ -7,3 +7,9 @@ Enter the next command on your terminal :
 
 go to the back repository on your terminal and type : 
 # npm i express body-parser mongoose cors
+
+launch the server by enter the next command in your terminal :
+# node server.js
+
+Open your postman, and configure it as below : 
+![alt text](https://i.postimg.cc/hvRB4pM4/Screenshot-2020-01-13-at-09-54-58.png)
