@@ -98,11 +98,12 @@ const chargesEmployeurs =  mongoose.Schema(
             min:1,
             max:20,
         },
-        dateDebutAnnee:
+        joursOuvres:
         {
             type: Number,
+            
         },
-        dateFinAnnee:
+        dateDebutAnneeEmployeurs:
         {
             type: Number,
         },

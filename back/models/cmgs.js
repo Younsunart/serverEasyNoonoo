@@ -2,27 +2,123 @@ const mongoose = require("mongoose");
 
 const cmg = new mongoose.Schema(
   {
-    palier1:
+    cmgCouplePalier1:
     {
       type: Number,
     },
-    palier2:
+    cmgCouplePalier2:
     {
       type: Number,
     },
-    palier3:
+    cmgCouplePalier3:
     {
       type: Number,
     },
-    palier4:
+    cmgCouplePalier4:
     {
       type: Number,
     },
-    palier5:
+    cmgCouplePalier5:
     {
       type: Number,
     },
-    palier6:
+    cmgCouplePalier6:
+    {
+      type: Number,
+    },
+    cmgParentIsolePalier1:
+    {
+      type: Number,
+    },
+    cmgParentIsolePalier2:
+    {
+      type: Number,
+    },
+    cmgParentIsolePalier3:
+    {
+      type: Number,
+    },
+    cmgParentIsolePalier4:
+    {
+      type: Number,
+    },
+    cmgParentIsolePalier5:
+    {
+      type: Number,
+    },
+    cmgParentIsolePalier6:
+    {
+      type: Number,
+    },
+    ageEnfant1:
+    {
+      type: Number,
+    },
+    ageEnfant2:
+    {
+      type: Number,
+    },
+    coupleRevenusA:
+    {
+      type: Number,
+    },
+    coupleRevenusB:
+    {
+      type: Number,
+    },
+    coupleRevenusC:
+    {
+      type: Number,
+    },
+    coupleRevenusD:
+    {
+      type: Number,
+    },
+    coupleRevenusE:
+    {
+      type: Number,
+    },
+    coupleRevenusF:
+    {
+      type: Number,
+    },
+    coupleRevenusG:
+    {
+      type: Number,
+    },
+    coupleRevenusH:
+    {
+      type: Number,
+    },
+    parentIsoleRevenusA:
+    {
+      type: Number,
+    },
+    parentIsoleRevenusB:
+    {
+      type: Number,
+    },
+    parentIsoleRevenusC:
+    {
+      type: Number,
+    },
+    parentIsoleRevenusD:
+    {
+      type: Number,
+    },
+    parentIsoleRevenusE:
+    {
+      type: Number,
+    },
+    parentIsoleRevenusF:
+    {
+      type: Number,
+    },
+    parentIsoleRevenusG:
+    {
+      type: Number,
+    },
+    parentIsoleRevenusH:
     {
       type: Number,
     },
@@ -30,11 +126,11 @@ const cmg = new mongoose.Schema(
     {
       type: Number,
     },
-    dateDebutAnnee:
+    dateDebutAnneeCmg:
     {
         type: Number,
     },
-    dateFinAnnee:
+    dateFinAnneeCmg:
     {
         type: Number,
     },
