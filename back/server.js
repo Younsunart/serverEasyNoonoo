@@ -291,7 +291,7 @@ app.post('/api/calculscharges', function (req, res) {
                 fondsNationalAideAuLogement = val.fondsNationalAideAuLogement
                 contributionAuFinancementDesOrganisationsSyndicales = val.contributionAuFinancementDesOrganisationsSyndicales
                 dateDebutAnneeEmployeurs = val.dateDebutAnneeEmployeurs
-                joursOuvres = val.dateDebutAnneeEmployeurs
+                joursOuvres = val.joursOuvres
               })
             )
           })
@@ -343,7 +343,6 @@ app.post('/api/calculscharges', function (req, res) {
         else {
           resolve(
             heuresMensuellesMajorees = Math.ceil(req.body.heuresSup * (52 / 12)),
-            console.log(heuresMensuellesMajorees)
           )
         }
       })
@@ -420,7 +419,6 @@ app.post('/api/calculscharges', function (req, res) {
       new Promise(resolve => {
         resolve(
           trancheAFamilleA = Math.min((salaireBrutMensuel * req.body.repartitionFamille - 0 * PMSS), (1 * PMSS - 0 * PMSS)),
-          console.log(trancheAFamilleA),
           trancheAFamilleB = Math.min((salaireBrutMensuel * (1 - req.body.repartitionFamille) - 0 * PMSS), (1 * PMSS - 0 * PMSS)),
           trancheB = Math.max(Math.min((salaireBrutMensuel - 1 * PMSS), (4 * PMSS - 1 * PMSS)), 0),
           trancheC = Math.max(Math.min((salaireBrutMensuel - 4 * PMSS), (8 * PMSS - 4 * PMSS)), 0),
@@ -461,8 +459,8 @@ app.post('/api/calculscharges', function (req, res) {
             CegTrAEmployes +
             cotisationSupplementaireAlsaceMoselleEmployes * req.body.alsaceMoselle +
             assuranceChomageEmployes +
-            IrcemPrevoyance))
-            + baseCommuneChargesSalariales) * 100) / 100
+            IrcemPrevoyanceEmployes))
+            + baseCommuneChargesSalariales) * 100) / 100,
         )
       ))
     )
@@ -483,7 +481,6 @@ app.post('/api/calculscharges', function (req, res) {
               assuranceChomageEmployes +
               IrcemPrevoyanceEmployes))
               + baseCommuneChargesSalariales) * 100) / 100,
-              console.log(chargesSalarialesFamilleB)
           )
         }
         else{
@@ -712,7 +709,7 @@ app.post('/api/calculscharges', function (req, res) {
     return (
       new Promise(resolve => {
         resolve(
-          primePanierRepasFamilleA = (joursOuvres - req.body.joursCP - req.body.joursRecup) * (req.body.joursTravaillesSemaines / 5) / 12 * req.body.montantRepas * req.body.repartitionFamille * 100 / 100
+          primePanierRepasFamilleA = ((joursOuvres - req.body.joursCP - req.body.joursRecup) * (req.body.joursTravaillesSemaines / 5)) / 12 * req.body.montantRepas * req.body.repartitionFamille * 100 / 100,
         )
       })
     )
@@ -813,41 +810,41 @@ app.post('/api/calculscharges', function (req, res) {
             if (money > parentIsoleRevenusE && age < ageEnfant1) {
               resolve(cmgArray.push(cmgParentIsolePalier1)) // 230,56
             }
-            else if (money > parentIsoleRevenusE && age > ageEnfant1 && age < ageEnfant2) {
+            else if (money > parentIsoleRevenusE && age >= ageEnfant1 && age < ageEnfant2) {
               resolve(cmgArray.push(cmgParentIsolePalier2)) // 115.28
             }
-            else if (parentIsoleRevenusA <= money && money <= parentIsoleRevenusE && age < ageEnfant1) {
+            else if (parentIsoleRevenusA < money && money <= parentIsoleRevenusE && age < ageEnfant1) {
               resolve(cmgArray.push(cmgParentIsolePalier3)) // 384,31
             }
-            else if (parentIsoleRevenusA <= money && money <= parentIsoleRevenusE && age > ageEnfant1 && age < ageEnfant2) {
+            else if (parentIsoleRevenusA < money && money <= parentIsoleRevenusE && age >= ageEnfant1 && age < ageEnfant2) {
               resolve(cmgArray.push(cmgParentIsolePalier4)) // 192,18
             }
-            else if (money < parentIsoleRevenusA && age < ageEnfant1) {
+            else if (money <= parentIsoleRevenusA && age < ageEnfant1) {
               resolve(cmgArray.push(cmgParentIsolePalier5)) // 609,47
             }
-            else if (money < parentIsoleRevenusA && age < ageEnfant1) {
+            else if (money <= parentIsoleRevenusA && age >= ageEnfant1 && age < ageEnfant2) {
               resolve(cmgArray.push(cmgParentIsolePalier6)) // 304,74
             }
             else {
               cmgArray.push(0)
             }
           case 2: // 2 enfants
-            if (money > parentIsoleRevenusF && age > ageEnfant1 && age < ageEnfant2) {
+            if (money > parentIsoleRevenusF && age < ageEnfant1) {
               resolve(cmgArray.push(cmgParentIsolePalier1)) // 230,56
             }
-            else if (money > parentIsoleRevenusF && age > ageEnfant1 && age < ageEnfant2) {
+            else if (money > parentIsoleRevenusF && age >= ageEnfant1 && age < ageEnfant2) {
               resolve(cmgArray.push(cmgParentIsolePalier2)) // 115.28
             }
-            else if (parentIsoleRevenusB <= money && money <= parentIsoleRevenusF && age < ageEnfant1) {
+            else if (parentIsoleRevenusB < money && money <= parentIsoleRevenusF && age < ageEnfant1) {
               resolve(cmgArray.push(cmgParentIsolePalier3)) // 384,31
             }
-            else if (parentIsoleRevenusB <= money && money <= parentIsoleRevenusF && age > ageEnfant1 && age < ageEnfant2) {
+            else if (parentIsoleRevenusB < money && money <= parentIsoleRevenusF && age >= ageEnfant1 && age < ageEnfant2) {
               resolve(cmgArray.push(cmgParentIsolePalier4)) // 192,18
             }
-            else if (money < parentIsoleRevenusB && age < ageEnfant1) {
+            else if (money <= parentIsoleRevenusB && age < ageEnfant1) {
               resolve(cmgArray.push(cmgParentIsolePalier5)) // 609,47
             }
-            else if (money < parentIsoleRevenusB && age > ageEnfant1 && age < ageEnfant2) {
+            else if (money <= parentIsoleRevenusB && age >= ageEnfant1 && age < ageEnfant2) {
               resolve(cmgArray.push(cmgParentIsolePalier6)) // 304,74
             }
             else {
@@ -857,19 +854,19 @@ app.post('/api/calculscharges', function (req, res) {
             if (money > parentIsoleRevenusG && age < ageEnfant1) {
               resolve(cmgArray.push(cmgParentIsolePalier1)) // 230,56
             }
-            else if (money > parentIsoleRevenusG && age > ageEnfant1 && age < ageEnfant2) {
+            else if (money > parentIsoleRevenusG && age >= ageEnfant1 && age < ageEnfant2) {
               resolve(cmgArray.push(cmgParentIsolePalier2)) // 115.28
             }
-            else if (parentIsoleRevenusC <= money && money <= parentIsoleRevenusG && age < ageEnfant1) {
+            else if (parentIsoleRevenusC < money && money <= parentIsoleRevenusG && age < ageEnfant1) {
               resolve(cmgArray.push(cmgParentIsolePalier3)) // 384,31
             }
-            else if (parentIsoleRevenusC <= money && money <= parentIsoleRevenusG && age > ageEnfant1 && age < ageEnfant2) {
+            else if (parentIsoleRevenusC < money && money <= parentIsoleRevenusG && age >= ageEnfant1 && age < ageEnfant2) {
               resolve(cmgArray.push(cmgParentIsolePalier4)) // 192,18
             }
-            else if (money < parentIsoleRevenusC && age < ageEnfant1) {
+            else if (money <= parentIsoleRevenusC && age < ageEnfant1) {
               resolve(cmgArray.push(cmgParentIsolePalier5)) // 609,47
             }
-            else if (money < parentIsoleRevenusC && age > ageEnfant1 && age < ageEnfant2) {
+            else if (money <= parentIsoleRevenusC && age >= ageEnfant1 && age < ageEnfant2) {
               resolve(cmgArray.push(cmgParentIsolePalier6)) // 304,74
             }
             else {
@@ -879,19 +876,19 @@ app.post('/api/calculscharges', function (req, res) {
             if (money > parentIsoleRevenusH && age < ageEnfant1) {
               resolve(cmgArray.push(cmgParentIsolePalier1)) // 230,56
             }
-            else if (money > parentIsoleRevenusH && age > ageEnfant1 && age < ageEnfant2) {
+            else if (money > parentIsoleRevenusH && age >= ageEnfant1 && age < ageEnfant2) {
               resolve(cmgArray.push(cmgParentIsolePalier2)) // 115.28
             }
-            else if (parentIsoleRevenusD <= money && money <= parentIsoleRevenusH && age < ageEnfant1) {
+            else if (parentIsoleRevenusD < money && money <= parentIsoleRevenusH && age < ageEnfant1) {
               resolve(cmgArray.push(cmgParentIsolePalier3)) // 384,31
             }
-            else if (parentIsoleRevenusD <= money && money <= parentIsoleRevenusH && age > ageEnfant1 && age < ageEnfant2) {
+            else if (parentIsoleRevenusD < money && money <= parentIsoleRevenusH && age >= ageEnfant1 && age < ageEnfant2) {
               resolve(cmgArray.push(cmgParentIsolePalier4)) // 192,18
             }
-            else if (money < parentIsoleRevenusD && age < ageEnfant1) {
+            else if (money <= parentIsoleRevenusD && age < ageEnfant1) {
               resolve(cmgArray.push(cmgParentIsolePalier5)) // 609,47
             }
-            else if (money < parentIsoleRevenusD && age > ageEnfant1 && age < ageEnfant2) {
+            else if (money <= parentIsoleRevenusD && age >= ageEnfant1 && age < ageEnfant2) {
               resolve(cmgArray.push(cmgParentIsolePalier6)) // 304,74
             }
             else {
@@ -904,19 +901,19 @@ app.post('/api/calculscharges', function (req, res) {
             if (money > coupleRevenusE && age < ageEnfant1) {
               resolve(cmgArray.push(cmgCouplePalier1)) // 177,36
             }
-            else if (money > coupleRevenusE && age > ageEnfant1 && age < ageEnfant2) {
+            else if (money > coupleRevenusE && age >= ageEnfant1 && age < ageEnfant2) {
               resolve(cmgArray.push(cmgCouplePalier2)) // 88,68
             }
-            else if (coupleRevenusA <= money && money <= coupleRevenusE && age < ageEnfant1) {
+            else if (coupleRevenusA < money && money <= coupleRevenusE && age < ageEnfant1) {
               resolve(cmgArray.push(cmgCouplePalier3)) // 295,62
             }
-            else if (coupleRevenusA <= money && money <= coupleRevenusE && age > ageEnfant1 && age < ageEnfant2) {
+            else if (coupleRevenusA < money && money <= coupleRevenusE && age >= ageEnfant1 && age < ageEnfant2) {
               resolve(cmgArray.push(cmgCouplePalier4)) // 147,83
             }
-            else if (money < coupleRevenusA && age < ageEnfant1) {
-              resolve(cmgArray.push(cmgParentIsolePalier5)) // 468.82
+            else if (money <= coupleRevenusA && age < ageEnfant1) {
+              resolve(cmgArray.push(cmgCouplePalier5)) // 468.82
             }
-            else if (money < coupleRevenusA && age > ageEnfant1 && age < ageEnfant2) {
+            else if (money <= coupleRevenusA && age >= ageEnfant1 && age < ageEnfant2) {
               resolve(cmgArray.push(cmgCouplePalier6)) // 234,41
             }
             else {
@@ -926,19 +923,19 @@ app.post('/api/calculscharges', function (req, res) {
             if (money > coupleRevenusF && age < ageEnfant1) {
               resolve(cmgArray.push(cmgCouplePalier1)) // 177,36
             }
-            else if (money > coupleRevenusF && age > ageEnfant1 && age < ageEnfant2) {
+            else if (money > coupleRevenusF && age >= ageEnfant1 && age < ageEnfant2) {
               resolve(cmgArray.push(cmgCouplePalier2)) // 88,68
             }
-            else if (coupleRevenusB <= money && money <= coupleRevenusF && age < ageEnfant1) {
-              resolev(cmgArray.push(cmgCouplePalier3)) // 295,62
+            else if (coupleRevenusB < money && money <= coupleRevenusF && age < ageEnfant1) {
+              resolve(cmgArray.push(cmgCouplePalier3)) // 295,62
             }
-            else if (coupleRevenusB <= money && money <= coupleRevenusF && age > ageEnfant1 && age < ageEnfant2) {
+            else if (coupleRevenusB < money && money <= coupleRevenusF && age >= ageEnfant1 && age < ageEnfant2) {
               resolve(cmgArray.push(cmgCouplePalier4)) // 147,83
             }
-            else if (money < coupleRevenusB && age < ageEnfant1) {
-              resolve(cmgArray.push(cmgParentIsolePalier5)) // 468.82
+            else if (money <= coupleRevenusB && age < ageEnfant1) {
+              resolve(cmgArray.push(cmgCouplePalier5)) // 468.82
             }
-            else if (money < coupleRevenusB && age > ageEnfant1 && age < ageEnfant2) {
+            else if (money <= coupleRevenusB && age >= ageEnfant1 && age < ageEnfant2) {
               resolve(cmgArray.push(cmgCouplePalier6)) // 234,41
             }
             else {
@@ -948,19 +945,19 @@ app.post('/api/calculscharges', function (req, res) {
             if (money > coupleRevenusG && age < ageEnfant1) {
               resolve(cmgArray.push(cmgCouplePalier1)) // 177,36
             }
-            else if (money > coupleRevenusG && age > ageEnfant1 && age < ageEnfant2) {
+            else if (money > coupleRevenusG && age >= ageEnfant1 && age < ageEnfant2) {
               resolve(cmgArray.push(cmgCouplePalier2)) // 88,68
             }
-            else if (coupleRevenusC <= money && money <= coupleRevenusG && age < ageEnfant1) {
+            else if (coupleRevenusC < money && money <= coupleRevenusG && age < ageEnfant1) {
               resolve(cmgArray.push(cmgCouplePalier3)) // 295,62
             }
-            else if (coupleRevenusC <= money && money <= coupleRevenusG && age > ageEnfant1 && age < ageEnfant2) {
+            else if (coupleRevenusC < money && money <= coupleRevenusG && age >= ageEnfant1 && age < ageEnfant2) {
               resolve(cmgArray.push(cmgCouplePalier4)) // 147,83
             }
-            else if (money < coupleRevenusC && age < ageEnfant1) {
-              resolve(cmgArray.push(cmgParentIsolePalier5)) // 468.82
+            else if (money <= coupleRevenusC && age < ageEnfant1) {
+              resolve(cmgArray.push(cmgCouplePalier5)) // 468.82
             }
-            else if (money < coupleRevenusC && age > ageEnfant1 && age < ageEnfant2) {
+            else if (money <= coupleRevenusC && age >= ageEnfant1 && age < ageEnfant2) {
               resolve(cmgArray.push(cmgCouplePalier6)) // 234,41
             }
             else {
@@ -970,19 +967,19 @@ app.post('/api/calculscharges', function (req, res) {
             if (money > coupleRevenusH && age < ageEnfant1) {
               resolve(cmgArray.push(cmgCouplePalier1)) // 177,36
             }
-            else if (money > coupleRevenusH && age > ageEnfant1 && age < ageEnfant2) {
+            else if (money > coupleRevenusH && age >= ageEnfant1 && age < ageEnfant2) {
               resolve(cmgArray.push(cmgCouplePalier2)) // 88,68
             }
-            else if (coupleRevenusD <= money && money <= coupleRevenusH && age < ageEnfant1) {
+            else if (coupleRevenusD < money && money <= coupleRevenusH && age < ageEnfant1) {
               resolve(cmgArray.push(cmgCouplePalier3)) // 295,62
             }
-            else if (coupleRevenusD <= money && money <= coupleRevenusH && age > ageEnfant1 && age < ageEnfant2) {
+            else if (coupleRevenusD < money && money <= coupleRevenusH && age >= ageEnfant1 && age < ageEnfant2) {
               resolve(cmgArray.push(cmgCouplePalier4)) // 147,83
             }
-            else if (money < coupleRevenusD && age < ageEnfant1) {
-              resolve(cmgArray.push(cmgParentIsolePalier5)) // 468.82
+            else if (money <= coupleRevenusD && age < ageEnfant1) {
+              resolve(cmgArray.push(cmgCouplePalier5)) // 468.82
             }
-            else if (money < coupleRevenusD && age > ageEnfant1 && age < ageEnfant2) {
+            else if (money <= coupleRevenusD && age >= ageEnfant1 && age < ageEnfant2) {
               resolve(cmgArray.push(cmgCouplePalier6)) // 234,41
             }
             else {
@@ -1296,6 +1293,8 @@ app.get('/api/calculsRepartition', function (req, res) {
     let heuresRepartitionEgale
     let heuresCommune
     let NounouTotale
+    let hourOutOfRangeA
+    let hourOutOfRangeB
 
     const calculCommonMinutes = () => {
       return (
@@ -1375,7 +1374,6 @@ app.get('/api/calculsRepartition', function (req, res) {
           })
           resolve (
             ponderateTotale = ponderateA + ponderateB,
-            console.log(ponderateA / 60, ponderateB / 60),
             ponderateFamilleA = (ponderateA / ponderateTotale),
             ponderateFamilleB = (ponderateB / ponderateTotale),
           )
@@ -1406,90 +1404,104 @@ app.get('/api/calculsRepartition', function (req, res) {
                 hourSupp25Commune = 0,
                 hourSupp50Commune = 0,
                 heuresExcluANormale = Math.min(heuresRepartitionEgale, (40*60 - heuresCommuneNormales) / 2),
-                heuresExcluBNormale = Math.min(heuresRepartitionEgale, (40*60 - heuresCommuneNormales) / 2) + Math.min(heuresExcluB, (40*60 - (heuresCommuneNormales + 2 * heuresExcluANormale))),
+                heuresExcluBNormale = Math.min(heuresRepartitionEgale, (40*60 - heuresCommuneNormales) / 2) + Math.min(heuresExcluB - heuresRepartitionEgale, (40*60 - (heuresCommuneNormales + 2 * heuresExcluANormale))),
                 heuresRepartitionEgale = heuresRepartitionEgale - (heuresExcluANormale),
+                heuresExclu = heuresExcluB - (heuresExcluBNormale),
                 hourSupp25A = Math.min(heuresRepartitionEgale, 4*60),
-                hourSupp25B = Math.min(heuresRepartitionEgale, 4*60) + Math.min((heuresExcluB - heuresRepartitionEgale), (8*60) - (2 * hourSupp25A)),
-                heuresExclu = heuresExcluA - (hourSupp25A + heuresExcluANormale),
-                heuresRepartitionEgale = Math.min(Math.abs(heuresRepartitionEgale - (hourSupp25B * 2)), 0),
+                hourSupp25B = Math.min(heuresRepartitionEgale, 4*60) + Math.min((heuresExclu - heuresRepartitionEgale), (8*60) - (2 * hourSupp25A)),
+                heuresExclu2 = heuresExclu - hourSupp25B,
+                heuresRepartitionEgale = heuresRepartitionEgale - hourSupp25A,
                 hourSupp50A = Math.min(heuresRepartitionEgale, 1*60),
-                hourSupp50B = Math.min(heuresRepartitionEgale, 1*60) + Math.min((heuresExclu - heuresRepartitionEgale), (2*60) - (2 * hourSupp50A))
+                hourSupp50B = Math.min(heuresRepartitionEgale, 1*60) + Math.min((heuresExclu2 - heuresRepartitionEgale), (2*60) - (2 * hourSupp50A)),
+                hourOutOfRangeA = ((heuresCommune + heuresExcluA) - (heuresCommuneNormales + hourSupp25Commune + hourSupp50Commune + heuresExcluANormale + hourSupp25A + hourSupp50A)) / 60,
+                hourOutOfRangeB = ((heuresCommune + heuresExcluB) - (heuresCommuneNormales + hourSupp25Commune + hourSupp50Commune + heuresExcluBNormale + hourSupp25B + hourSupp50B)) / 60,
               )
             }
             else if (heuresCommune <= 48*60 && heuresCommune > 40*60) {
               resolve(
                 heuresCommuneNormales = 40*60,
-                hourSupp25Commune = Math.min(heuresCommune - heuresCommuneNormale, 8*60),
+                hourSupp25Commune = Math.min(heuresCommune - heuresCommuneNormales, 8*60),
                 hourSupp50Commune =  0,
                 heuresExcluANormale = 0,
                 heuresExcluBNormale = 0,
                 hourSupp25A = Math.min(heuresRepartitionEgale, (8*60 - hourSupp25Commune) / 2),
-                hourSupp25B = Math.min(heuresRepartitionEgale, (8*60 - hourSupp25Commune) / 2) + Math.min(heuresExcluB, (8*60 - (hourSupp25Commune + 2 * hourSupp25A))),
-                heuresExclu = heuresExcluA - (hourSupp25A + heuresExcluANormale),
-                heuresRepartitionEgale = heuresRepartitionEgale - (hourSupp25A * 2),
+                hourSupp25B = Math.min(heuresRepartitionEgale, (8*60 - hourSupp25Commune) / 2) + Math.min(heuresExcluB  - heuresRepartitionEgale, (8*60 - (hourSupp25Commune + 2 * hourSupp25A))),
+                heuresExclu = heuresExcluB - hourSupp25B,
+                heuresRepartitionEgale = heuresRepartitionEgale - (hourSupp25A),
                 hourSupp50A = Math.min(heuresRepartitionEgale, 1*60),
-                hourSupp50B = Math.min(heuresRepartitionEgale, 1*60) + Math.min((heuresExclu - heuresRepartitionEgale), (2*60) - (2 * hourSupp50A))
+                hourSupp50B = Math.min(heuresRepartitionEgale, 1*60) + Math.min((heuresExclu - heuresRepartitionEgale), (2*60) - (2 * hourSupp50A)),
+                hourOutOfRangeA = ((heuresCommune + heuresExcluA) - (heuresCommuneNormales + hourSupp25Commune + hourSupp50Commune + heuresExcluANormale + hourSupp25A + hourSupp50A)) / 60,
+                hourOutOfRangeB = ((heuresCommune + heuresExcluB) - (heuresCommuneNormales + hourSupp25Commune + hourSupp50Commune + heuresExcluBNormale + hourSupp25B + hourSupp50B)) / 60,
               )
             }
             else {
               resolve (
                 heuresCommuneNormales = 40*60,
                 hourSupp25Commune = 8*60,
-                hourSupp50Commune =  Math.min(heuresCommune - heuresCommuneNormale - hourSupp25Commune, 2*60),
+                hourSupp50Commune =  Math.min(heuresCommune - heuresCommuneNormales - hourSupp25Commune, 2*60),
                 heuresExcluANormale = 0,
                 heuresExcluBNormale = 0,
                 hourSupp25A = 0,
                 hourSupp25B = 0,
                 hourSupp50A = Math.min(heuresRepartitionEgale, (2*60 - hourSupp50Commune) / 2),
-                hourSupp50B = Math.min(heuresRepartitionEgale, (2*60 - hourSupp50Commune) / 2) + Math.min(heuresExcluB  - heuresRepartitionEgale, (2*60 - (hourSupp50Commune + 2 * hourSupp50A)))
+                hourSupp50B = Math.min(heuresRepartitionEgale, (2*60 - hourSupp50Commune) / 2) + Math.min(heuresExcluB  - heuresRepartitionEgale, (2*60 - (hourSupp50Commune + 2 * hourSupp50A))),
+                hourOutOfRangeA = ((heuresCommune + heuresExcluA) - (heuresCommuneNormales + hourSupp25Commune + hourSupp50Commune + heuresExcluANormale + hourSupp25A + hourSupp50A)) / 60,
+                hourOutOfRangeB = ((heuresCommune + heuresExcluB) - (heuresCommuneNormales + hourSupp25Commune + hourSupp50Commune + heuresExcluBNormale + hourSupp25B + hourSupp50B)) /60,
               )
             }
           }
           else {
             if (heuresCommune <= 40*60) {
-              resolve (
+              resolve(
                 heuresCommuneNormales = heuresCommune,
                 hourSupp25Commune = 0,
                 hourSupp50Commune = 0,
                 heuresExcluBNormale = Math.min(heuresRepartitionEgale, (40*60 - heuresCommuneNormales) / 2),
-                heuresExcluANormale = Math.min(heuresRepartitionEgale, (40*60 - heuresCommuneNormales) / 2) + Math.min(heuresExcluA, (40*60 - (heuresCommuneNormales + 2 * heuresExcluBNormale))),
-                heuresRepartitionEgale = heuresRepartitionEgale - (heuresExcluANormale),
+                heuresExcluANormale = Math.min(heuresRepartitionEgale, (40*60 - heuresCommuneNormales) / 2) + Math.min(heuresExcluA - heuresRepartitionEgale, (40*60 - (heuresCommuneNormales + 2 * heuresExcluBNormale))),
+                heuresRepartitionEgale = heuresRepartitionEgale - (heuresExcluBNormale),
+                heuresExclu = heuresExcluA - (heuresExcluANormale),
                 hourSupp25B = Math.min(heuresRepartitionEgale, 4*60),
-                hourSupp25A = Math.min(heuresRepartitionEgale, 4*60) + Math.min((heuresExcluA - heuresRepartitionEgale - heuresExcluANormale), (8*60) - (2 * hourSupp25B)),
-                heuresExclu = heuresExcluA - (hourSupp25A + heuresExcluANormale),
-                heuresRepartitionEgale = Math.min(Math.abs(heuresRepartitionEgale - (hourSupp25B * 2)), 0),
+                hourSupp25A = Math.min(heuresRepartitionEgale, 4*60) + Math.min((heuresExclu - heuresRepartitionEgale), (8*60) - (2 * hourSupp25B)),
+                heuresExclu2 = heuresExclu - hourSupp25A,
+                heuresRepartitionEgale = heuresRepartitionEgale - hourSupp25B,
                 hourSupp50B = Math.min(heuresRepartitionEgale, 1*60),
-                hourSupp50A = Math.min(heuresRepartitionEgale, 1*60) + Math.min((heuresExclu - heuresRepartitionEgale), (2*60) - (2 * hourSupp50B))
+                hourSupp50A = Math.min(heuresRepartitionEgale, 1*60) + Math.min((heuresExclu2 - heuresRepartitionEgale), (2*60) - (2 * hourSupp50B)),
+                hourOutOfRangeA = ((heuresCommune + heuresExcluA) - (heuresCommuneNormales + hourSupp25Commune + hourSupp50Commune + heuresExcluANormale + hourSupp25A + hourSupp50A)) / 60,
+                hourOutOfRangeB = ((heuresCommune + heuresExcluB) - (heuresCommuneNormales + hourSupp25Commune + hourSupp50Commune + heuresExcluBNormale + hourSupp25B + hourSupp50B)) / 60,
               )
             }
-              else if (heuresCommune <= 48*60 && heuresCommune > 40*60) {
-                resolve(
-                  heuresCommuneNormales = 40*60,
-                  hourSupp25Commune = Math.min(heuresCommune - heuresCommuneNormales, 8*60),
-                  hourSupp50Commune =  0,
-                  heuresExcluBNormale = 0,
-                  heuresExcluANormale = 0,
-                  hourSupp25B = Math.min(heuresRepartitionEgale, (8*60 - hourSupp25Commune) / 2),
-                  hourSupp25A = Math.min(heuresRepartitionEgale, (8*60 - hourSupp25Commune) / 2) + Math.min(heuresExcluA, (8*60 - (hourSupp25Commune + 2 * hourSupp25B))),
-                  heuresExclu = heuresExcluA - (hourSupp25A + heuresExcluANormale),
-                  heuresRepartitionEgale = Math.min(Math.abs(heuresRepartitionEgale - (hourSupp25B * 2)), 0),
-                  hourSupp50B = Math.min(heuresRepartitionEgale, 1*60),
-                  hourSupp50A = Math.min(heuresRepartitionEgale, 1*60) + Math.min((heuresExclu - heuresRepartitionEgale), (2*60) - (2 * hourSupp50B))
-                )
-              }
-              else {
-                resolve(
-                  heuresCommuneNormales = 40*60,
-                  hourSupp25Commune = 8*60,
-                  hourSupp50Commune =  Math.min(heuresCommune - heuresCommuneNormales - hourSupp25Commune, 2*60),
-                  heuresExcluANormale = 0,
-                  heuresExcluBNormale = 0,
-                  hourSupp25A = 0,
-                  hourSupp25B = 0,
-                  hourSupp50B = Math.min(heuresRepartitionEgale, (2*60 - hourSupp50Commune) / 2),
-                  hourSupp50A = Math.min(heuresRepartitionEgale, (2*60 - hourSupp50Commune) / 2) + Math.min(heuresExcluA  - heuresRepartitionEgale, (2*60 - (hourSupp50Commune + 2 * hourSupp50B)))
-                )
-              }
+            else if (heuresCommune <= 48*60 && heuresCommune > 40*60) {
+              resolve(
+                heuresCommuneNormales = 40*60,
+                hourSupp25Commune = Math.min(heuresCommune - heuresCommuneNormales, 8*60),
+                hourSupp50Commune =  0,
+                heuresExcluANormale = 0,
+                heuresExcluBNormale = 0,
+                hourSupp25B = Math.min(heuresRepartitionEgale, (8*60 - hourSupp25Commune) / 2),
+                hourSupp25A = Math.min(heuresRepartitionEgale, (8*60 - hourSupp25Commune) / 2) + Math.min(heuresExcluA - heuresRepartitionEgale, (8*60 - (hourSupp25Commune + 2 * hourSupp25B))),
+                heuresExclu = heuresExcluA - hourSupp25A,
+                heuresRepartitionEgale = heuresRepartitionEgale - (hourSupp25B),
+                hourSupp50B = Math.min(heuresRepartitionEgale, 1*60),
+                hourSupp50A = Math.min(heuresRepartitionEgale, 1*60) + Math.min((heuresExclu - heuresRepartitionEgale), (2*60) - (2 * hourSupp50B)),
+                hourOutOfRangeA = ((heuresCommune + heuresExcluA) - (heuresCommuneNormales + hourSupp25Commune + hourSupp50Commune + heuresExcluANormale + hourSupp25A + hourSupp50A) / 60),
+                hourOutOfRangeB = ((heuresCommune + heuresExcluB) - (heuresCommuneNormales + hourSupp25Commune + hourSupp50Commune + heuresExcluBNormale + hourSupp25B + hourSupp50B)) / 60,
+              )
+            }
+            else {
+              resolve (
+                heuresCommuneNormales = 40*60,
+                hourSupp25Commune = 8*60,
+                hourSupp50Commune =  Math.min(heuresCommune - heuresCommuneNormales - hourSupp25Commune, 2*60),
+                heuresExcluANormale = 0,
+                heuresExcluBNormale = 0,
+                hourSupp25A = 0,
+                hourSupp25B = 0,
+                hourSupp50B = Math.min(heuresRepartitionEgale, (2*60 - hourSupp50Commune) / 2),
+                hourSupp50A = Math.min(heuresRepartitionEgale, (2*60 - hourSupp50Commune) / 2) + Math.min(heuresExcluA  - heuresRepartitionEgale, (2*60 - (hourSupp50Commune + 2 * hourSupp50B))),
+                hourOutOfRangeA = ((heuresCommune + heuresExcluA) - (heuresCommuneNormales + hourSupp25Commune + hourSupp50Commune + heuresExcluANormale + hourSupp25A + hourSupp50A)) / 60,
+                hourOutOfRangeB = ((heuresCommune + heuresExcluB) - (heuresCommuneNormales + hourSupp25Commune + hourSupp50Commune + heuresExcluBNormale + hourSupp25B + hourSupp50B)) / 60,
+              )
+            }
           }
         })
       )
@@ -1498,16 +1510,9 @@ app.get('/api/calculsRepartition', function (req, res) {
     const calculNounouTotale = () => {
       return (
         new Promise(resolve => {
-          if(MinutesTot <= 60 * 40) {
-            resolve(NounouTotale = MinutesTot)
-          }
-          else if(MinutesTot > 60 * 40 && MinutesTot <= 60 * 48){
-            resolve(NounouTotale = (60*40) + ((MinutesTot - 60*40) * 1.25))
-            console.log(NounouTotale / 60)
-          }
-          else {
-            resolve(NounouTotale = (60*40) + (8 * 60 * 1.25) + ((MinutesTot - (60*48)) * 1.50))
-          }
+          resolve(
+            NounouTotale = Math.min(heuresCommuneNormales + heuresExcluANormale + heuresExcluBNormale + (hourSupp25Commune + hourSupp25A + hourSupp25B) * 1.25 + (hourSupp50Commune + hourSupp50A + hourSupp50B) * 1.50, 53*60),
+          )  
         })
       )
     }
@@ -1516,8 +1521,8 @@ app.get('/api/calculsRepartition', function (req, res) {
       return(
         new Promise (resolve => {
           resolve (
-            RepartitionA = ((((heuresCommuneNormales +   hourSupp25Commune +  hourSupp50Commune) * ponderateFamilleA) + heuresExcluANormale + (hourSupp25A * 1.25) + (hourSupp50A * 1.50)) / NounouTotale),
-            RepartitionB = ((((heuresCommuneNormales +   hourSupp25Commune +  hourSupp50Commune) * ponderateFamilleB) + heuresExcluBNormale + (hourSupp25B * 1.25) + (hourSupp50B * 1.50)) / NounouTotale),
+            RepartitionA = ((((heuresCommuneNormales +   (hourSupp25Commune * 1.25) +  (hourSupp50Commune * 1.50)) * ponderateFamilleA) + heuresExcluANormale + (hourSupp25A * 1.25) + (hourSupp50A * 1.50)) / NounouTotale),
+            RepartitionB = ((((heuresCommuneNormales +   (hourSupp25Commune * 1.25) +  (hourSupp50Commune * 1.50)) * ponderateFamilleB) + heuresExcluBNormale + (hourSupp25B * 1.25) + (hourSupp50B * 1.50)) / NounouTotale),
             heuresCommuneNormales = heuresCommuneNormales / 60,
             hourSupp25Commune = hourSupp25Commune / 60,
             hourSupp50Commune = hourSupp50Commune / 60,
@@ -1529,7 +1534,9 @@ app.get('/api/calculsRepartition', function (req, res) {
             hourSupp50A = hourSupp50A / 60,
             tauxTot = (RepartitionA + RepartitionB) * 100,
             heuresExcluA = heuresExcluA / 60,
-            heuresExcluB = heuresExcluB / 60
+            heuresExcluB = heuresExcluB / 60,
+            RepartitionA = Math.round(RepartitionA * 10000) / 100,
+            RepartitionB = Math.round(RepartitionB * 10000) / 100,
           )
         })
       )
@@ -1540,7 +1547,7 @@ app.get('/api/calculsRepartition', function (req, res) {
       return (
         new Promise(resolve => {
           resolve(
-            res.send({heuresCommuneNormales, hourSupp25Commune, hourSupp50Commune, heuresExcluANormale, heuresExcluBNormale, hourSupp25A, hourSupp25B, hourSupp50B, hourSupp50A, RepartitionA, RepartitionB, tauxTot, heuresExcluA, heuresExcluB})
+            res.send({heuresCommuneNormales, hourSupp25Commune, hourSupp50Commune, heuresExcluANormale, heuresExcluBNormale, hourSupp25A, hourSupp25B, hourSupp50B, hourSupp50A, RepartitionA, RepartitionB, tauxTot, heuresExcluA, heuresExcluB, hourOutOfRangeA, hourOutOfRangeB})
           )
         })
       )
