@@ -1,43 +1,22 @@
-# serverEasyNoonoo
+## Best practices
 
-Create a new repository on your machine.
+CSS : for each tag, use alphabetical order / One CSS file per component
+JSX : one tag for one HTML object to avoid conflicts
+CSS and HTML : camelCase type
+All calculs will be in the back files
+Redux will be used for this project
 
-Enter the next command on your terminal : 
-# git clone https://github.com/Younsunart/serverEasyNoonoo.git
+### Git
 
-go to the back repository on your terminal and type : 
-# npm i express body-parser mongoose cors
+One branch per feature and per version
+!! One person must work on one branch !!
+Never push on master and dev
+Never do two pull requests at the same time
 
-launch the server by enter the next command in your terminal :
-# node server.js
+### `npm start`
 
-Open your postman, and configure it as below :
+Runs the app in the development mode.<br />
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-link for the request : http://localhost:4000/api/calculscharges
-type of the request : POST
-content-type : application/json
-
-see the next photos to be sure how to configure it
-
-![alt text](https://i.postimg.cc/KzJPxHmB/Screenshot-2020-01-13-at-10-03-19.png)
-
-Enter the request as below : 
-
-![alt text](https://i.postimg.cc/25ddX5JH/Screenshot-2020-01-13-at-10-02-08.png)
-
-The request must match the request below, just change values : 
-
-{
-	"dateDebutAnnee" : 2020,
-	"enfantPlusJeune" : 4,
-	"nbEnfants" : 1,
-	"parentIsole" : true,
-	"ressourcesAnnuelles" : 25000,
-	"heuresSup" : 8,
-	"heuresHebdo" : 40,
-	"tauxHoraire": 10.40,
-	"repartitionFamille" : 0.5,
-	"alsaceMoselle" : false,
-	"trancheA" : true, 
-	"tauxParticipationCotisations" : 0.5
-}
+The page will reload if you make edits.<br />
+You will also see any lint errors in the console.

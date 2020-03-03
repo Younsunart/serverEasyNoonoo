@@ -1,0 +1,25 @@
+.resultsCharges-parent {
+    font-size : 1.5vw;
+    background-color : #ffffff;
+}
+
+.resultsCharges-parent h3 {
+    font-size : 2vw;
+    color : black;
+}
+
+.lineTable {
+    border-width : 1px;
+    border-style : solid none none none;
+    border-color : #2e3858;
+}
+
+.inputTable {
+    background-color : #E2E5ED;
+    margin : 2% 0 2% 0;
+}
+
+#highlightedResult {
+    background-color : #ee5e6a;
+    color : #ffffff;
+}
