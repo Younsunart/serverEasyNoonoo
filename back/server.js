@@ -21,7 +21,8 @@ dotenv.config();
 
 // ____________ REMOTE DB ROUTE ______________
 
-const dbRoute = process.env.MONGOLAB_URI;
+const dbRoute = process.env.URL;
+console.log(process.env.URL)
 // ____________ CHECK YOUR CONNECTION TO MONGO DB REMOTE ______________
 
 mongoose
